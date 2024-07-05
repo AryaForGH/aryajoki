@@ -140,8 +140,6 @@ a {
     gap: 8px;
 }
 
-
-
 .card-item {
     display: flex;
     justify-content: center;
@@ -176,6 +174,68 @@ footer {
     text-align: center;
     background: #1A2238;
     color: white;
+}
+
+/* Bagian CSS untuk fitur BERI BINTANG */
+.rating-container {
+    text-align: center;
+    padding: 20px;
+}
+
+.rating-title {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.stars {
+    display: inline-block;
+}
+
+.star {
+    font-size: 30px;
+    cursor: pointer;
+    color: gray;
+    transition: color 0.2s ease-in-out;
+}
+
+.star.selected {
+    color: gold;
+}
+
+/* Bagian CSS untuk fitur KOMENTAR */
+.comment-section {
+    text-align: center;
+    padding: 20px;
+}
+
+.comment-title {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+textarea {
+    width: 100%;
+    max-width: 500px;
+    height: 100px;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+#comments-list {
+    text-align: left;
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 10px;
+}
+
+.comment {
+    background-color: #f7f7f7;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 @media screen and (max-width: 500px) {
@@ -213,5 +273,15 @@ footer {
     footer {
         margin-bottom: 70px;
         margin-top: 50px;
+    }
+
+    .btn-cta {
+        display: block;
+        margin: 10px auto;
+    }
+
+    .comment-section textarea, .comment-section button {
+        width: 90%;
+        margin: 0 auto;
     }
 }
