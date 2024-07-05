@@ -203,11 +203,11 @@ footer {
     cursor: pointer;
     color: gray;
     transition: color 0.2s ease-in-out;
-    margin: 0 5px;
+    justify-content: center;
 }
 
 .star.selected {
-    color: red;
+    color: gold;
 }
 
 .selected-rating {
