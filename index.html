@@ -62,15 +62,16 @@
 
         <!-- Fitur BERI BINTANG -->
         <div class="rating-container">
-            <p class="rating-title">Beri Bintang</p>
-            <div class="stars">
-                <span class="star" data-value="1">&#9733;</span>
-                <span class="star" data-value="2">&#9733;</span>
-                <span class="star" data-value="3">&#9733;</span>
-                <span class="star" data-value="4">&#9733;</span>
-                <span class="star" data-value="5">&#9733;</span>
-            </div>
-        </div>
+    <h2 class="rating-title">Beri Bintang</h2>
+    <div class="stars">
+        <span class="star" onclick="setRating(1)">★</span>
+        <span class="star" onclick="setRating(2)">★</span>
+        <span class="star" onclick="setRating(3)">★</span>
+        <span class="star" onclick="setRating(4)">★</span>
+        <span class="star" onclick="setRating(5)">★</span>
+    </div>
+    <p class="selected-rating">Rating Anda: <span id="selected-rating">0</span></p>
+</div>
 
         <!-- Bagian KOMENTAR -->
         <div class="comment-section">
