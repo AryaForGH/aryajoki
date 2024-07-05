@@ -207,7 +207,7 @@ footer {
 }
 
 .star.selected {
-    color: gold;
+    color: red;
 }
 
 .selected-rating {
