@@ -213,6 +213,7 @@ footer {
 .selected-rating {
     font-size: 18px;
     margin-top: 10px;
+    color: white;
 }
 
 /* Bagian CSS untuk fitur KOMENTAR */
