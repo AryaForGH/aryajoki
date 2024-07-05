@@ -195,7 +195,7 @@ footer {
 
 .stars {
     display: flex;
-    justify-center: center;
+    justify-content: center;
 }
 
 .star {
