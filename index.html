@@ -80,6 +80,13 @@
                     <button class="delete-btn" onclick="deleteComment(1)">Hapus</button>
                 </div>
             </div>
+
+            <!-- Form Komentar Baru -->
+            <form id="comment-form" onsubmit="submitComment(event)">
+                <h3>Tambah Komentar Baru</h3>
+                <textarea id="comment-input" rows="4" cols="50" placeholder="Masukkan komentar Anda..."></textarea>
+                <button type="submit">Kirim Komentar</button>
+            </form>
         </div>
     </div>
 
@@ -118,6 +125,57 @@
             });
         }
 
+        // Fungsi untuk menangani pengiriman komentar baru
+        function submitComment(event) {
+            event.preventDefault();
+            
+            const commentInput = document.getElementById('comment-input').value;
+
+            // Kirim permintaan POST ke backend untuk menyimpan komentar baru
+            fetch('/api/comments/add', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    // Jika diperlukan, tambahkan header otorisasi atau token
+                    // 'Authorization': 'Bearer tokenAnda'
+                },
+                body: JSON.stringify({ comment: commentInput }),
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Gagal mengirim komentar');
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Sukses menambahkan komentar ke database
+                // Tambahkan komentar baru ke dalam UI
+                const newCommentId = data.id; // Gantikan dengan ID yang dikembalikan dari server
+                const commentsSection = document.getElementById('comments');
+                commentsSection.innerHTML += `
+                    <div class="comment" id="comment-${newCommentId}">
+                        <p class="comment-content">${commentInput}</p>
+                        <div class="stars">
+                            <span class="star" onclick="setRating(1)">★</span>
+                            <span class="star" onclick="setRating(2)">★</span>
+                            <span class="star" onclick="setRating(3)">★</span>
+                            <span class="star" onclick="setRating(4)">★</span>
+                            <span class="star" onclick="setRating(5)">★</span>
+                        </div>
+                        <p class="selected-rating">Rating Anda: <span id="selected-rating-${newCommentId}">0</span></p>
+                        <button class="delete-btn" onclick="deleteComment(${newCommentId})">Hapus</button>
+                    </div>
+                `;
+                
+                // Bersihkan input setelah dikirim
+                document.getElementById('comment-input').value = '';
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                // Tampilkan pesan kesalahan kepada pengguna
+            });
+        }
+
         // Fungsi untuk mengatur rating
         let currentRating = 0;
 
@@ -128,6 +186,8 @@
 
         function updateRatingDisplay() {
             document.getElementById('selected-rating').textContent = currentRating;
+            // Jika ingin menambahkan rating untuk komentar baru, atur ID yang sesuai
+            // document.getElementById(`selected-rating-${commentId}`).textContent = currentRating;
             highlightStars(currentRating);
         }
 
