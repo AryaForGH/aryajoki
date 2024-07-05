@@ -201,13 +201,13 @@ footer {
 .star {
     font-size: 30px;
     cursor: pointer;
-    color: gray;
+    color: gray; /* Warna default */
     transition: color 0.2s ease-in-out;
-    justify-content: center;
+    margin: 0 5px; /* Spasi antar bintang */
 }
 
 .star.selected {
-    color: gold;
+    color: gold; /* Warna saat dipilih */
 }
 
 .selected-rating {
