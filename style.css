@@ -220,6 +220,7 @@ footer {
 .comment-section {
     text-align: center;
     padding: 20px;
+    margin-top: 30px;
 }
 
 .comment-title {
@@ -250,11 +251,18 @@ textarea {
 }
 
 .comment {
-    background-color: #f7f7f7;
+    background-color: #f0f0f0;
     padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 5px;
+    margin-bottom: 20px;
+    border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.comment-content {
+    margin-bottom: 10px;
+} 
+.comment-rating {
+    font-weight: bold;
 }
 
 @media screen and (max-width: 500px) {
