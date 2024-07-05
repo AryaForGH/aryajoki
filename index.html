@@ -110,7 +110,7 @@
     </footer>
 
     <script>
-        // Fungsi untuk menangani pengiriman komentar baru
+        // Fungsi untuk mengirim komentar ke backend
         function submitComment(event) {
             event.preventDefault();
 
@@ -118,30 +118,52 @@
             const rating = currentRating; // Ambil rating saat ini
 
             // Kirim permintaan POST ke backend untuk menyimpan komentar baru
-            // Di sini Anda harus mengirimkan data komentar dan rating ke backend
-            // dan menangani respons dari backend (berhasil atau gagal menyimpan komentar)
-            
-            // Contoh sederhana:
-            // Simpan komentar ke dalam array sementara (tidak disimpan di server)
-            const newComment = {
-                id: Date.now(), // ID sementara
-                comment: commentInput,
-                rating: rating
-            };
-
-            // Tambahkan komentar baru ke dalam UI
-            const commentsSection = document.getElementById('comments');
-            const commentElement = document.createElement('div');
-            commentElement.classList.add('comment');
-            commentElement.innerHTML = `
-                <p class="comment-content">${newComment.comment}</p>
-                <p class="comment-rating">Rating: ${newComment.rating}</p>
-            `;
-            commentsSection.appendChild(commentElement);
+            fetch('https://example.com/api/comments', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ comment: commentInput, rating: rating }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Sukses menyimpan, tambahkan komentar ke UI
+                addCommentToUI(data.comment, data.rating);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
 
             // Bersihkan input setelah dikirim
             document.getElementById('comment-input').value = '';
             resetRating();
+        }
+
+        // Fungsi untuk memuat daftar komentar dari backend
+        function loadComments() {
+            fetch('https://example.com/api/comments')
+            .then(response => response.json())
+            .then(data => {
+                // Tampilkan komentar di UI
+                data.forEach(comment => {
+                    addCommentToUI(comment.comment, comment.rating);
+                });
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+
+        // Fungsi untuk menambahkan komentar ke UI
+        function addCommentToUI(comment, rating) {
+            const commentsSection = document.getElementById('comments');
+            const commentElement = document.createElement('div');
+            commentElement.classList.add('comment');
+            commentElement.innerHTML = `
+                <p class="comment-content">${comment}</p>
+                <p class="comment-rating">Rating: ${rating}</p>
+            `;
+            commentsSection.appendChild(commentElement);
         }
 
         // Fungsi untuk mengatur rating
@@ -168,8 +190,10 @@
             });
         }
 
-        // Initialize
-        highlightStars(currentRating);
+        // Panggil fungsi untuk memuat komentar saat halaman dimuat
+        document.addEventListener('DOMContentLoaded', () => {
+            loadComments();
+        });
     </script>
 
 </body>
