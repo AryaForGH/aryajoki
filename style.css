@@ -299,6 +299,10 @@ textarea {
         margin: 10px auto;
     }
 
+    .star.selected {
+    color: red;
+    }
+
     .comment-section textarea, .comment-section button {
         width: 90%;
         margin: 0 auto;
