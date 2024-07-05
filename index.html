@@ -11,8 +11,8 @@
     
     <header>
         <div class="logo">
-            <img src="aset/aset/partner.png" alt="Logo" class="logo-img">
-            <h1 class="logo-title">Joki with Cli</h1>
+            <img src="aset/aset/partner.png" alt="" class="logo-img">
+            <h1 class="logo-title">CLI JOKIAN</h1>
         </div>
         <nav>
             <ul>
@@ -27,7 +27,7 @@
         <div class="intro">
             <p class="title">Hai, Arya Ramadhan Here</p>
             <p class="description">Technology Influencer from Lahat</p>
-            <img src="aset/foto/1.jpg" alt="Arya Ramadhan" class="img-foto">
+            <img src="aset/foto/1.jpg" alt="" class="img-foto"/>
         </div>
     </div>
 
@@ -36,49 +36,50 @@
             <p class="title">Pusing Mikirin Coding?</p>
             <p class="description">Ngejoki aja dulu, belajar codingnya belakangan.</p>
             <div class="mt-10">
-                <button class="btn-cta" onclick="redirWhatsapp()">Klik Untuk Joki</button>
+                <button class="btn-cta" onclick="redirWhatsapp()">Mari Ngejoki</button>
             </div>
         </div>
 
         <div class="container">
             <div class="card" id="jasa">
                 <div class="card-item">
-                    <img src="aset/aset/24-hours.png" alt="Pelayanan Nonstop" class="icon">
+                    <img src="aset/aset/24-hours.png" alt="icon 1" class="icon">
                     <p class="card-title">Pelayanan Nonstop</p>
                     <p class="card-description">Pelayanan yang tersedia dalam 24/7.</p>
                 </div>
                 <div class="card-item">
-                    <img src="aset/aset/hot-deal.png" alt="Biaya Murah" class="icon">
+                    <img src="aset/aset/hot-deal.png" alt="icon 2" class="icon">
                     <p class="card-title">Biaya Murah</p>
                     <p class="card-description">Biaya termurah dari seluruh jasa joki.</p>
                 </div>
                 <div class="card-item">
-                    <img src="aset/aset/rating.png" alt="Review" class="icon">
+                    <img src="aset/aset/rating.png" alt="icon 3" class="icon">
                     <p class="card-title">574 Review</p>
                     <p class="card-description">Client senang, saya pun senang.</p>
                 </div>
             </div>
         </div>
+    </div>
 
-        <!-- Fitur BERI BINTANG -->
-        <div class="rating-container">
-             <h2 class="rating-title">Beri Bintang</h2>
-             <div class="stars">
-                 <span class="star" onclick="setRating(1)">&#9733;</span>
-                 <span class="star" onclick="setRating(2)">&#9733;</span>
-                 <span class="star" onclick="setRating(3)">&#9733;</span>
-                 <span class="star" onclick="setRating(4)">&#9733;</span>
-                 <span class="star" onclick="setRating(5)">&#9733;</span>
-             </div>
-             <p class="selected-rating">Rating Anda: <span id="selected-rating">0</span></p>
-        </div>
-
-        <!-- Bagian KOMENTAR -->
+    <!-- Bagian Komentar -->
+    <div class="container">
         <div class="comment-section">
-            <p class="comment-title">Komentar</p>
-            <textarea id="comment" placeholder="Tulis komentar anda..."></textarea>
-            <button class="btn-cta" onclick="submitComment()">Kirim Komentar</button>
-            <div id="comments-list"></div>
+            <h2 class="comment-title">Komentar Pengguna</h2>
+            <div id="comments">
+                <!-- Contoh komentar -->
+                <div class="comment" id="comment-1">
+                    <p class="comment-content">Ini adalah komentar pengguna.</p>
+                    <div class="stars">
+                        <span class="star" onclick="setRating(1)">★</span>
+                        <span class="star" onclick="setRating(2)">★</span>
+                        <span class="star" onclick="setRating(3)">★</span>
+                        <span class="star" onclick="setRating(4)">★</span>
+                        <span class="star" onclick="setRating(5)">★</span>
+                    </div>
+                    <p class="selected-rating">Rating Anda: <span id="selected-rating">0</span></p>
+                    <button class="delete-btn" onclick="deleteComment(1)">Hapus</button>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -87,55 +88,37 @@
     </footer>
 
     <script>
-        function redirInstagram() {
-            window.location.href = "https://instagram.com/cliarym";
-        }
-
-        function redirWhatsapp() {
-            window.location.href = "https://wa.me/+6285809575164";
-        }
-
-        // JavaScript untuk BERI BINTANG
-        const stars = document.querySelectorAll('.star');
-        stars.forEach(star => {
-            star.addEventListener('click', function() {
-                const value = parseInt(this.getAttribute('data-value'));
-                stars.forEach((s, index) => {
-                    if (index < value) {
-                        s.classList.add('selected');
-                    } else {
-                        s.classList.remove('selected');
-                    }
-                });
-            });
-        });
-
-        // JavaScript untuk KOMENTAR
-        function loadComments() {
-            const comments = JSON.parse(localStorage.getItem('comments')) || [];
-            const commentList = document.getElementById('comments-list');
-            commentList.innerHTML = '';
-            comments.forEach(comment => {
-                const newComment = document.createElement('div');
-                newComment.classList.add('comment');
-                newComment.textContent = comment;
-                commentList.appendChild(newComment);
+        // Fungsi untuk menghapus komentar
+        function deleteComment(commentId) {
+            fetch(`/api/comments/delete/${commentId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    // Jika diperlukan, tambahkan header otorisasi atau token
+                    // 'Authorization': 'Bearer tokenAnda'
+                },
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Gagal menghapus komentar');
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Sukses menghapus komentar dari database
+                // Hapus elemen komentar dari UI
+                const commentElement = document.getElementById(`comment-${commentId}`);
+                if (commentElement) {
+                    commentElement.remove();
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                // Tampilkan pesan kesalahan kepada pengguna
             });
         }
 
-        function submitComment() {
-            const comment = document.getElementById('comment').value;
-            if (comment) {
-                const comments = JSON.parse(localStorage.getItem('comments')) || [];
-                comments.push(comment);
-                localStorage.setItem('comments', JSON.stringify(comments));
-                loadComments();
-                document.getElementById('comment').value = '';
-            }
-        }
-
-        // JavaScript for Rating System
-        
+        // Fungsi untuk mengatur rating
         let currentRating = 0;
 
         function setRating(rating) {
@@ -151,20 +134,16 @@
         function highlightStars(rating) {
             const stars = document.querySelectorAll('.star');
             stars.forEach((star, index) => {
-               if (index < rating) {
-               star.classList.add('selected');
-               } else {
-                   star.classList.remove('selected');
-               }
-         });
-}
+                if (index < rating) {
+                    star.classList.add('selected');
+                } else {
+                    star.classList.remove('selected');
+                }
+            });
+        }
 
-// Initialize
+        // Initialize
         updateRatingDisplay();
- 
-
-        // Load comments on page load
-        window.onload = loadComments;
     </script>
 
 </body>
