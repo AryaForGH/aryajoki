@@ -190,6 +190,7 @@ footer {
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
     display: inline-block;
     padding-bottom: 5px;
+    text-align: center;
 }
 
 .stars {
@@ -202,10 +203,16 @@ footer {
     cursor: pointer;
     color: gray;
     transition: color 0.2s ease-in-out;
+    margin: 0 5px;
 }
 
 .star.selected {
     color: gold;
+}
+
+.selected-rating {
+    font-size: 18px;
+    margin-top: 10px;
 }
 
 /* Bagian CSS untuk fitur KOMENTAR */
