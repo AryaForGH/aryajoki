@@ -6,6 +6,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CLI JOKIAN</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        /* CSS tambahan untuk tampilan komentar */
+        .comments-section {
+            margin-top: 30px;
+        }
+        .comment {
+            margin-bottom: 20px;
+            padding: 10px;
+            background-color: #f0f0f0;
+            border-radius: 8px;
+        }
+        .comment-content {
+            margin-bottom: 10px;
+        }
+        .comment-rating {
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
     
@@ -61,22 +79,11 @@
         </div>
     </div>
 
-    <!-- Bagian Komentar -->
+    <!-- Form Komentar -->
     <div class="container">
         <div class="comment-section">
-            <h2 class="comment-title">Komentar Pengguna</h2>
-            <div id="comments">
-                <!-- Contoh komentar -->
-                <div class="comment" id="comment-1">
-                    <p class="comment-content">Ini adalah komentar pengguna.</p>
-                    <p class="selected-rating">Rating Anda: <span id="selected-rating">0</span></p>
-                    <button class="delete-btn" onclick="deleteComment(1)">Hapus</button>
-                </div>
-            </div>
-
-            <!-- Form Komentar Baru -->
+            <h2 class="comment-title">Form Komentar</h2>
             <form id="comment-form" onsubmit="submitComment(event)">
-                <h3>Tambah Komentar Baru</h3>
                 <textarea id="comment-input" rows="4" cols="50" placeholder="Masukkan komentar Anda..."></textarea>
                 <div class="stars">
                     <span class="star" onclick="setRating(1)">★</span>
@@ -88,6 +95,14 @@
                 <button type="submit">Kirim Komentar</button>
             </form>
         </div>
+
+        <!-- Daftar Komentar Pengguna -->
+        <div class="comments-section">
+            <h2 class="comment-title">Komentar Pengguna</h2>
+            <div id="comments">
+                <!-- Daftar komentar akan ditambahkan melalui JavaScript -->
+            </div>
+        </div>
     </div>
 
     <footer>
@@ -95,80 +110,38 @@
     </footer>
 
     <script>
-        // Fungsi untuk menghapus komentar
-        function deleteComment(commentId) {
-            fetch(`/api/comments/delete/${commentId}`, {
-                method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json',
-                    // Jika diperlukan, tambahkan header otorisasi atau token
-                    // 'Authorization': 'Bearer tokenAnda'
-                },
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Gagal menghapus komentar');
-                }
-                return response.json();
-            })
-            .then(data => {
-                // Sukses menghapus komentar dari database
-                // Hapus elemen komentar dari UI
-                const commentElement = document.getElementById(`comment-${commentId}`);
-                if (commentElement) {
-                    commentElement.remove();
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                // Tampilkan pesan kesalahan kepada pengguna
-            });
-        }
-
         // Fungsi untuk menangani pengiriman komentar baru
         function submitComment(event) {
             event.preventDefault();
-            
+
             const commentInput = document.getElementById('comment-input').value;
             const rating = currentRating; // Ambil rating saat ini
 
             // Kirim permintaan POST ke backend untuk menyimpan komentar baru
-            fetch('/api/comments/add', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    // Jika diperlukan, tambahkan header otorisasi atau token
-                    // 'Authorization': 'Bearer tokenAnda'
-                },
-                body: JSON.stringify({ comment: commentInput, rating: rating }),
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Gagal mengirim komentar');
-                }
-                return response.json();
-            })
-            .then(data => {
-                // Sukses menambahkan komentar ke database
-                // Tambahkan komentar baru ke dalam UI
-                const newCommentId = data.id; // Gantikan dengan ID yang dikembalikan dari server
-                const commentsSection = document.getElementById('comments');
-                commentsSection.innerHTML += `
-                    <div class="comment" id="comment-${newCommentId}">
-                        <p class="comment-content">${commentInput}</p>
-                        <p class="selected-rating">Rating Anda: <span id="selected-rating-${newCommentId}">${rating}</span></p>
-                        <button class="delete-btn" onclick="deleteComment(${newCommentId})">Hapus</button>
-                    </div>
-                `;
-                
-                // Bersihkan input setelah dikirim
-                document.getElementById('comment-input').value = '';
-                resetRating();
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                // Tampilkan pesan kesalahan kepada pengguna
-            });
+            // Di sini Anda harus mengirimkan data komentar dan rating ke backend
+            // dan menangani respons dari backend (berhasil atau gagal menyimpan komentar)
+            
+            // Contoh sederhana:
+            // Simpan komentar ke dalam array sementara (tidak disimpan di server)
+            const newComment = {
+                id: Date.now(), // ID sementara
+                comment: commentInput,
+                rating: rating
+            };
+
+            // Tambahkan komentar baru ke dalam UI
+            const commentsSection = document.getElementById('comments');
+            const commentElement = document.createElement('div');
+            commentElement.classList.add('comment');
+            commentElement.innerHTML = `
+                <p class="comment-content">${newComment.comment}</p>
+                <p class="comment-rating">Rating: ${newComment.rating}</p>
+            `;
+            commentsSection.appendChild(commentElement);
+
+            // Bersihkan input setelah dikirim
+            document.getElementById('comment-input').value = '';
+            resetRating();
         }
 
         // Fungsi untuk mengatur rating
