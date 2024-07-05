@@ -193,7 +193,8 @@ footer {
 }
 
 .stars {
-    display: inline-block;
+    display: flex;
+    justify-center: center;
 }
 
 .star {
