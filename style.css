@@ -185,10 +185,9 @@ footer {
 .rating-title {
     font-size: 24px;
     font-weight: bold;
-    color: #FF6A3D;
+    color: white;
     margin-bottom: 10px;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-    border-bottom: 2px solid #FF6A3D;
     display: inline-block;
     padding-bottom: 5px;
 }
@@ -217,10 +216,9 @@ footer {
 .comment-title {
     font-size: 24px;
     font-weight: bold;
-    color: #FF6A3D;
+    color: white;
     margin-bottom: 10px;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-    border-bottom: 2px solid #FF6A3D;
     display: inline-block;
     padding-bottom: 5px;
 }
